@@ -1,55 +1,53 @@
 import 'dart:ui';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'package:flutter/material.dart';
-
+import 'card1.dart';
+import 'card2.dart';
+import 'card3.dart';
 void main() {
   runApp(const MyApp());
 }
-
-class MyApp extends StatelessWidget {
+int selectedIndex=0;
+ List<Widget> cards=[
+ card1(),
+ card2(),
+ card3(),
+];
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home:Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-        title: const Center( child: Text ("Fooder", 
-        style: TextStyle(
+        title: Center( child: Text ("Fooder", 
+        style: const TextStyle(
           color: Colors.black),) ),
       ),
-      body:Center( 
-      child: Container(
-        height: 600,
-        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child:
-              Image.asset('assets/images/bread.jpg')
-              ),
-         
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-            children:<Widget>
-            [ Text(
-              'Editor\'s choice',
-              style: GoogleFonts.roboto(fontSize: 18,color: Colors.white),
-            ),
-            Text('The Art of dough',
-            style: GoogleFonts.roboto(fontSize: 26,color: Colors.white,fontWeight: FontWeight.bold),
-            )],
-        ),
-          ) ],
-        ),
-        ),
-        ),
+      body: cards[selectedIndex],
+        bottomNavigationBar:
+        BottomNavigationBar(
+          onTap: (index){
+            setState(() {
+              selectedIndex=index;
+            });
+          },
+          currentIndex: selectedIndex,
+          items:const [
+          BottomNavigationBarItem(
+          icon: Icon(Icons.card_giftcard), label: 'card1'),
+           BottomNavigationBarItem(
+          icon: Icon(Icons.card_giftcard), label: 'card2'),
+           BottomNavigationBarItem(
+          icon: Icon(Icons.card_giftcard), label: 'card3')
+          ],
+          ),
         ),
         );
   }
